@@ -36,4 +36,11 @@ public Account(int accountId, String accountType, double balance) {
     this.balance = balance;
   }
 
+  public void deposit(double amount) {
+
+  }
+
+  public void withdraw(double amount) {
+
+  }
 }

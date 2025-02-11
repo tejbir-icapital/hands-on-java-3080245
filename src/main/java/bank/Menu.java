@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 import javax.security.auth.login.LoginException;
 import javax.sql.DataSource;
+import javax.xml.crypto.Data;
+
+import bank.exceptions.AmountException;
 
 public class Menu {
 
@@ -17,7 +20,7 @@ public class Menu {
 
     Customer customer = menu.authenticateUser();
     if (customer != null) {
-      Account account = DataSource.getAccount(customer.getAccountId());
+      Account account = Datasource.getAccount(customer.getAccountId());
       menu.showMenu(customer, account);
     }
     menu.scanner.close();
@@ -58,12 +61,22 @@ public class Menu {
         case 1:
           System.out.println("How much would you like to deposit?");
           amount = scanner.nextDouble();
-          account.deposit(amount);
+          try { 
+            account.deposit(amount);
+          } catch(AmountException e){
+            System.out.println(e.getMessage());
+            System.out.println("Please try again.");
+          }
           break;
         case 2:
           System.out.println("How much would you like to withdraw?");
           amount = scanner.nextDouble();
+          try{
           account.withdraw(amount);
+          }catch(AmountException e) {
+            System.out.println(e.getMessage());
+            System.out.println("Please try again.");
+          }
           break;
         case 3:
           System.out.println("Current balance: " + account.getBalance());
